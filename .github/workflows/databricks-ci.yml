@@ -10,7 +10,7 @@ jobs:
       - run: virtualenv venv
       - run: source venv/bin/activate
       - run: pip install -r requirements.txt
-      - run: pytest functions --junitxml=unit-testresults.xml
+      - run: pytest --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
         env:
             DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
