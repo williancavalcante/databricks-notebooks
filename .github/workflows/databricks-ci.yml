@@ -21,10 +21,6 @@ jobs:
           EOF
       - run: pytest --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
-        env:
-            DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-            DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-            DATABRICKS_CLUSTER_ID: ${{ secrets.DATABRICKS_CLUSTER_ID }}
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
