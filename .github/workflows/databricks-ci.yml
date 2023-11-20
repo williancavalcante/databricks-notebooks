@@ -10,6 +10,14 @@ jobs:
       - run: virtualenv venv
       - run: source venv/bin/activate
       - run: pip install -r requirements.txt
+      - name: Install Databricks CLI
+        run: pip install databricks-cli
+      - name: Configure Databricks CLI
+        run: |
+          databricks configure --token --profile DEFAULT <<EOF
+          ${{ secrets.DATABRICKS_HOST }}
+          ${{ secrets.DATABRICKS_TOKEN }}
+          EOF
       - run: pytest --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
         env:
