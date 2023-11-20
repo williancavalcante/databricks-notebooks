@@ -19,14 +19,19 @@ jobs:
           ${{ secrets.DATABRICKS_HOST }}
           ${{ secrets.DATABRICKS_TOKEN }}
           EOF
-      - name: Get changed directories
-        id: get-directories
+      - name: Get changed files
+        id: files
         run: |
-          CHANGED_DIRS=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }} | xargs -I {} dirname {} | uniq) echo "CHANGED_DIRS=$CHANGED_DIRS" >> $GITHUB_ENV
-      - name: Print changed directories
+          echo "::set-output name=list::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs -L 1 dirname | uniq)"
+
+      - name: Run Pytest on Changed Directories
         run: |
-          echo "Changed directories: $CHANGED_DIRS"
-      - run: pytest --junitxml=unit-testresults.xml ${{ env.CHANGED_DIRS }}
+          CHANGED_DIRS="${{ steps.files.outputs.list }}"
+          for DIR in $CHANGED_DIRS; do
+            if [ -d "$DIR" ]; then
+              pytest --junitxml=unit-testresults.xml $DIR
+            fi
+          done
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
