@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Identificar diretórios modificados que contêm arquivos Python
-dirs=$(git diff --name-only HEAD HEAD~ | grep '\.py$' | xargs -n 1 dirname | sort -u)
+# Tenta obter a lista de diretórios modificados, fallback para todos os diretórios se falhar
+dirs=$(git diff --name-only HEAD HEAD~ | grep '\.py$' | xargs -n 1 dirname | sort -u) || dirs=$(find . -type f -name "*.py" | xargs -n 1 dirname | sort -u)
 
 # Executar pytest em cada diretório identificado
 for dir in $dirs; do
