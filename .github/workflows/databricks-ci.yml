@@ -19,10 +19,9 @@ jobs:
           ${{ secrets.DATABRICKS_HOST }}
           ${{ secrets.DATABRICKS_TOKEN }}
           EOF
-      - run: chmod +x scripts/run_pytest_on_changed_dirs.sh
-      - run: scripts/run_pytest_on_changed_dirs.sh
+      - run: pytest test --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: '**/unit-testresults-*.xml'
+          files: unit-testresults.xml
