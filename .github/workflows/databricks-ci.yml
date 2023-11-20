@@ -22,7 +22,7 @@ jobs:
       - name: Get changed directories
         id: get-directories
         run: |
-          CHANGED_DIRS=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }} | xargs -n 1 dirname | uniq) echo "CHANGED_DIRS=$CHANGED_DIRS" >> $GITHUB_ENV
+          CHANGED_DIRS=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }} | xargs -I {} dirname {} | uniq) echo "CHANGED_DIRS=$CHANGED_DIRS" >> $GITHUB_ENV
       - run: pytest --junitxml=unit-testresults.xml ${{ env.CHANGED_DIRS }}
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
