@@ -19,7 +19,11 @@ jobs:
           ${{ secrets.DATABRICKS_HOST }}
           ${{ secrets.DATABRICKS_TOKEN }}
           EOF
-      - run: pytest --junitxml=unit-testresults.xml
+      - name: Get changed directories
+        id: changed_dirs
+        run: |
+          echo "CHANGED_DIRS=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '/' | awk 'FS=\"/\" {print $1}' | uniq)" >> $GITHUB_ENV
+      - run: pytest --junitxml=unit-testresults.xml ${{ env.CHANGED_DIRS }}
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
