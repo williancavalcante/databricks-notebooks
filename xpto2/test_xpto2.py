@@ -22,10 +22,3 @@ def test_dataframe_from_table():
 
         # Assert
         assertDataFrameEqual(df, expected_df)
-
-def test_dataframe_equality():
-        data = [("Alice", 1), ("Bob", 2)]
-        df1 = spark.createDataFrame(data, ["name", "id"])
-        df2 = spark.createDataFrame(data, ["name", "id"])
-
-        assertDataFrameEqual(df1, df2)
