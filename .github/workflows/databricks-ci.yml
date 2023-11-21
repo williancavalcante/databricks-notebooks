@@ -24,7 +24,7 @@ jobs:
         run: |
           git fetch origin main:main
           git diff main --name-only --diff-filter=d | sed 's|/.*||' | sort -u > MODIFIED_DIRS
-          echo "GITHUB_MODIFIED_DIRS=$(cat MODIFIED_DIRS)" >> $GITHUB_ENV
+          echo "GITHUB_MODIFIED_DIRS=$(cat MODIFIED_DIRS)"
           echo $GITHUB_MODIFIED_DIRS
       - run: pytest --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
