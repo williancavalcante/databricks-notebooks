@@ -1,5 +1,7 @@
-import re
+# Databricks notebook source
 
+import re
+# COMMAND ----------
 class StorageContext:
     """
     Gerencia e fornece contexto de armazenamento, como conta de armazenamento,
