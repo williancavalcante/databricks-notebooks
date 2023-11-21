@@ -25,8 +25,8 @@ jobs:
           git fetch origin main:main
           git diff main --name-only --diff-filter=d | sed 's|/.*||' | sort -u | tr '\n' ' ' > MODIFIED_DIRS
           MODIFIED_DIRS_CONTENT=$(cat MODIFIED_DIRS)
-          echo "GITHUB_MODIFIED_DIRS=$MODIFIED_DIRS_CONTENT"
-          echo $GITHUB_MODIFIED_DIRS
+          echo "GITHUB_MODIFIED_DIRS=$MODIFIED_DIRS_CONTENT" >> $GITHUB_ENV
+          echo ${{ env.GITHUB_MODIFIED_DIRS }}
       - run: pytest --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
