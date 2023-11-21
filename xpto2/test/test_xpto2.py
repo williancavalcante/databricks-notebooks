@@ -16,8 +16,6 @@ def test_dataframe_from_table():
         expected_data = [(1, "Administration"), (2, "Human Resource"), (3, "Engineering")]
         # Schema para o DataFrame
         schema = "id INT, name STRING"
-
-        # Criar DataFrame esperado
         expected_df = spark.createDataFrame(expected_data, schema)
 
         # Assert
