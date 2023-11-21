@@ -1,3 +1,4 @@
+# Databricks notebook source
 from databricks.connect.session import DatabricksSession as SparkSession
 from databricks.sdk.core import Config
 from pyspark.testing.utils import assertDataFrameEqual
@@ -5,9 +6,11 @@ from pyspark.sql.functions import *
 from pyspark.sql.types import *
 from heimdall import StorageContext
 import unittest
+# COMMAND ----------
 
 config = Config(profile='DEFAULT', cluster_id='1017-032629-beha6p1')
 spark = SparkSession.builder.sdkConfig(config).getOrCreate()
+# COMMAND ----------
 
 class TestStorageContext(unittest.TestCase):
  
@@ -74,6 +77,8 @@ class TestStorageContext(unittest.TestCase):
                 result = StorageContext._extract_value(**case["params"])
                 self.assertEqual(result, case["expected"])
 
+# COMMAND ----------
+
 def test_dataframe_from_table():
         # Lendo o DataFrame da tabela (ajuste este comando para sua fonte de dados)
         df = spark.read.table("hive_metastore.default.departments")
@@ -89,12 +94,16 @@ def test_dataframe_from_table():
         # Assert
         assertDataFrameEqual(df, expected_df)
 
+# COMMAND ----------
+
 def test_dataframe_equality():
         data = [("Alice", 1), ("Bob", 2)]
         df1 = spark.createDataFrame(data, ["name", "id"])
         df2 = spark.createDataFrame(data, ["name", "id"])
 
         assertDataFrameEqual(df1, df2)
+
+# COMMAND ----------
 
 def test_dataframe_filtering():
     data = [("Alice", 1), ("Bob", 2), ("Charlie", 3)]
