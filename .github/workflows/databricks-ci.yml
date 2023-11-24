@@ -18,6 +18,7 @@ jobs:
           databricks configure --token --profile DEFAULT <<EOF
           ${{ secrets.DATABRICKS_HOST }}
           ${{ secrets.DATABRICKS_TOKEN }}
+          ${{ secrets.DATABRICKS_CLUSTER_ID }}
           EOF
       # - name: Get Root Directories of Modified Files
       #   shell: bash
