@@ -19,15 +19,15 @@ jobs:
           ${{ secrets.DATABRICKS_HOST }}
           ${{ secrets.DATABRICKS_TOKEN }}
           EOF
-      - name: Get Root Directories of Modified Files
-        shell: bash
-        run: |
-          git fetch origin main:main
-          git diff main --name-only --diff-filter=d | grep -v '^\.github/' | sed 's|/.*||' | sort -u | sed 's|$|/test|' | tr '\n' ' ' > MODIFIED_DIRS
-          MODIFIED_DIRS_CONTENT=$(cat MODIFIED_DIRS)
-          echo "GITHUB_MODIFIED_DIRS=$MODIFIED_DIRS_CONTENT" >> $GITHUB_ENV
-      - run: echo $GITHUB_MODIFIED_DIRS
-      - run: pytest --junitxml=unit-testresults.xml $GITHUB_MODIFIED_DIRS
+      # - name: Get Root Directories of Modified Files
+      #   shell: bash
+      #   run: |
+      #     git fetch origin main:main
+      #     git diff main --name-only --diff-filter=d | grep -v '^\.github/' | sed 's|/.*||' | sort -u | sed 's|$|/test|' | tr '\n' ' ' > MODIFIED_DIRS
+      #     MODIFIED_DIRS_CONTENT=$(cat MODIFIED_DIRS)
+      #     echo "GITHUB_MODIFIED_DIRS=$MODIFIED_DIRS_CONTENT" >> $GITHUB_ENV
+      # - run: echo $GITHUB_MODIFIED_DIRS
+      - run: pytest --junitxml=unit-testresults.xml
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()

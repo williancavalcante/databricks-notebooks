@@ -1,9 +1,13 @@
+# Databricks notebook source
 from pyspark.testing.utils import assertDataFrameEqual
 from pyspark.sql.functions import *
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 
 spark = SparkSession.builder.getOrCreate()
+# COMMAND ----------
+df = spark.read.table("hive_metastore.default.departments")
+df.show()
 # COMMAND ----------
 def test_dataframe_from_table():
         # Lendo o DataFrame da tabela (ajuste este comando para sua fonte de dados)
