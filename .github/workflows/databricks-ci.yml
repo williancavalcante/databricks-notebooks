@@ -15,10 +15,11 @@ jobs:
         run: pip install databricks-cli
       - name: Configure Databricks CLI
         run: |
-          echo "y
+          databricks configure --token --profile DEFAULT <<EOF
           ${{ secrets.DATABRICKS_HOST }}
           ${{ secrets.DATABRICKS_TOKEN }}
-          ${{ secrets.DATABRICKS_CLUSTER_ID }}" | databricks configure --token --profile DEFAULT
+          EOF
+      - run: echo "DATABRICKS_CLUSTER_ID=${{ secrets.DATABRICKS_CLUSTER_ID }}" >> $GITHUB_ENV
       # - name: Get Root Directories of Modified Files
       #   shell: bash
       #   run: |

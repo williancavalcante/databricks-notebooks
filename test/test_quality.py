@@ -1,10 +1,13 @@
 # Databricks notebook source
 from pyspark.testing.utils import assertDataFrameEqual
 from pyspark.sql.functions import *
-from pyspark.sql import SparkSession
+from databricks.sdk.core import Config
+from databricks.connect.session import DatabricksSession as SparkSession
 from pyspark.sql.types import *
 
-spark = SparkSession.builder.getOrCreate()
+
+config = Config(profile='DEFAULT')
+spark = SparkSession.builder.sdkConfig(config).getOrCreate()
 # COMMAND ----------
 df = spark.read.table("hive_metastore.default.departments")
 df.show()
