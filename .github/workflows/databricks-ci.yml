@@ -20,6 +20,7 @@ jobs:
           ${{ secrets.DATABRICKS_TOKEN }}
           EOF
       - run: echo "DATABRICKS_CLUSTER_ID=${{ secrets.DATABRICKS_CLUSTER_ID }}" >> $GITHUB_ENV
+      - run: echo "PYARROW_IGNORE_TIMEZONE=1" >> $GITHUB_ENV
       # - name: Get Root Directories of Modified Files
       #   shell: bash
       #   run: |

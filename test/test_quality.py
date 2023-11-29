@@ -8,9 +8,7 @@ from pyspark.sql.types import *
 
 config = Config(profile='DEFAULT')
 spark = SparkSession.builder.sdkConfig(config).getOrCreate()
-# COMMAND ----------
-df = spark.read.table("hive_metastore.default.departments")
-df.show()
+
 # COMMAND ----------
 def test_dataframe_from_table():
         # Lendo o DataFrame da tabela (ajuste este comando para sua fonte de dados)
@@ -19,7 +17,7 @@ def test_dataframe_from_table():
         # Dados esperados
         expected_data = [(1, "Administration"), (2, "Human Resource"), (3, "Engineering")]
         # Schema para o DataFrame
-        schema = "id INT, name STRING"
+        schema = "id STRING, name STRING"
 
         # Criar DataFrame esperado
         expected_df = spark.createDataFrame(expected_data, schema)
